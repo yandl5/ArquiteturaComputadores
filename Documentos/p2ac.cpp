@@ -2,14 +2,25 @@
 #include <string>
 #include <stdlib.h>
 #include <fstream>
+#include <sstream>
 #include <cstring>
+#include "page.h"
+#include "memoriaVirtual.h"
 
-//compilar: g++ p2ac.cpp -o virtual
+
+//compilar:  g++ -std=c++11 page.cpp memoriaVirtual.cpp p2ac.cpp randomGenerator.cpp -o virtual
 //executar: ./virtual lru arquivo.log 4 128
 using namespace std;
 
 int main(int argc, char* argv[])
 {
+	//memoria virtual e variaveis tokenização
+	//referencia: https://pt.stackoverflow.com/questions/190755/como-separar-uma-string-em-peda%C3%A7os?rq=1
+	Memoria memoria;
+	vector<string> tokens;
+	string token;
+	Page pageAux;
+
 	//dados de entrada
 	string algoritmo;
 	string file;
@@ -51,6 +62,15 @@ int main(int argc, char* argv[])
 				lidas+=1;
 			if(foundW!=string::npos)
 				escritas+=1;
+			//tokenizar e separar as string para armazenar na classe memória como devidas páginas
+			istringstream tokenizer {linha};
+			while(tokenizer >> token)
+				tokens.push_back(token);
+       		pageAux.setAdress(tokens[0]);
+       		pageAux.setOperation(tokens[1]);
+       		tokens.clear();
+       		memoria.adicionarNovaPagina(pageAux);
+       		cout<<endl;
 		}
 	}
 
