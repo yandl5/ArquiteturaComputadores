@@ -3,6 +3,7 @@
 #include <string>
 #include "page.h"
 #include <vector>
+#include <iostream>
 class Memoria
 {
 private:
@@ -10,6 +11,7 @@ private:
 	int size;
 	string algorithm;
 	int sizeOfPage;
+	int numeroPaginas;
 public:
 	Memoria();
 	~Memoria();
@@ -23,6 +25,10 @@ public:
 	int getSizeOfPage();
 	//manipular memoria(aqui entrará os algortimos futuros de manipulação de memória)
 	void adicionarNovaPagina(Page aux);
-
+	void maxPage();
+	void findPage(string adress);
+	void insertLRU(Page aux);
+	void insertFIFO(Page aux);
+	void insertRANDOM(Page aux);
 };
 #endif

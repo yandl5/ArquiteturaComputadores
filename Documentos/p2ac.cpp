@@ -73,6 +73,11 @@ int main(int argc, char* argv[])
        		cout<<endl;
 		}
 	}
+	//preencher os valores e armazenar na memória
+	memoria.setSize(sizeMemory);
+	memoria.setSizeOfPage(sizeFrame);
+	memoria.setAlgorithm(algoritmo);
+	memoria.maxPage();
 
 	//printar relaório
 	cout<<"Arquivo de entrada: "<<file<<endl;
