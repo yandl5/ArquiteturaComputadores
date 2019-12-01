@@ -49,8 +49,16 @@ int main(int argc, char* argv[])
 	char nomeArquivo[file.size()+1];
 	strcpy(nomeArquivo,file.c_str());
 	ifstream fileRead(nomeArquivo);
+
+	//preencher os valores e armazenar na memória
+	memoria.setSize(sizeMemory);
+	memoria.setSizeOfPage(sizeFrame);
+	memoria.setAlgorithm(algoritmo);
+	memoria.maxPage();
+
 	//ler arquivo de entrada
 	cout<<"Executando o simulador..."<<endl;
+
 	if(fileRead.is_open())
 	{
 		while(! fileRead.eof())
@@ -68,16 +76,19 @@ int main(int argc, char* argv[])
 				tokens.push_back(token);
        		pageAux.setAdress(tokens[0]);
        		pageAux.setOperation(tokens[1]);
+       		if(pageAux.getOperation()=="R")
+       		{
+       			memoria.findPage(pageAux.getAdress());
+       		}
+       		else
+       		{
+       			memoria.adicionarNovaPagina(pageAux);
+       		}
        		tokens.clear();
-       		memoria.adicionarNovaPagina(pageAux);
+       		memoria.printRam();
        		cout<<endl;
 		}
 	}
-	//preencher os valores e armazenar na memória
-	memoria.setSize(sizeMemory);
-	memoria.setSizeOfPage(sizeFrame);
-	memoria.setAlgorithm(algoritmo);
-	memoria.maxPage();
 
 	//printar relaório
 	cout<<"Arquivo de entrada: "<<file<<endl;
@@ -86,5 +97,6 @@ int main(int argc, char* argv[])
 	cout<<"Técnica de reposição: "<<algoritmo<<endl;
 	cout<<"Páginas lidas: "<<lidas<<endl;
 	cout<<"Páginas escritas: "<<escritas<<endl;
+	cout<<"Page Faults: "<<memoria.getContPageFault()<<endl;
 	return 0;
 }
