@@ -15,6 +15,7 @@ void Memoria::adicionarNovaPagina(Page aux)
 {
 	//to use ctime: https://stackoverflow.com/questions/3220477/how-to-use-clock-in-c
 	double timeAtual = millis_since_midnight();
+	aux.setTime(timeAtual);
 	if(pages.size()<numeroPaginas)
 	{
 		pages.push_back(aux);
@@ -39,7 +40,7 @@ void Memoria::findPage(string adress)
 {
 	for(unsigned int i=0;i<pages.size();i++)
 	{
-		if(adress==pages[i].getAdress())
+		if(adress==pages[i].getAdress()&&pages[i].getOperation()=="r")
 		{
 			cout<<"Página encontrada, endereço: "<<adress<<endl;
 			double timeAtual = millis_since_midnight();
@@ -78,6 +79,7 @@ void Memoria::insertFIFO(Page aux)
 	aux.setTime(millis_since_midnight());
 	pages.push_back(aux);
 	contPageFault++;
+	cout<<"Posição pagina apagada: "<<0<<endl;
 }
 void Memoria::insertRANDOM(Page aux)
 {
